@@ -14,8 +14,6 @@ class PasswordGeneratorGui:
             [sg.Slider(key='-PASSWORD_LENGTH-', range=(8, 100), default_value=6, size=(30, 10), orientation='horizontal', font=body_text_font)],
             [sg.Checkbox(key='-DIGITS-', text='Include Numbers', default=True, font=body_text_font)],
             [sg.Checkbox(key='-SPECIAL_CHARS-', text='Include Special Characters', default=True, font=body_text_font)],
-            [sg.Text(text='Keywords\n(Separate keywords with a space.)', justification='left', font=body_text_font)],
-            [sg.Input(key='-KEYWORDS-', justification='left', size=(30, 1), font=body_text_font)],
         ]
 
         output_frame_layout = [
@@ -59,7 +57,6 @@ class PasswordGeneratorGui:
                     password_length=int(values['-PASSWORD_LENGTH-']),
                     include_numbers=values['-DIGITS-'],
                     include_special_chars=values['-SPECIAL_CHARS-'],
-                    keywords=values['-KEYWORDS-'].split(' ')
                 )
                 password = password_generator.generate_password()
                 print(password)
@@ -69,7 +66,6 @@ class PasswordGeneratorGui:
                 window.FindElement('-DIGITS-').Update(True)
                 window.FindElement('-SPECIAL_CHARS-').Update(True)
                 window.FindElement('-PASSWORD_LENGTH-').Update(0)
-                window.FindElement('-KEYWORDS-').Update('')
 
             if event == '-CLEAR-':
                 window.FindElement('-OUTPUT-').Update('')

@@ -63,18 +63,4 @@ class PasswordGeneratorUnitTests(TestCase):
 
         self.assertTrue((not any(char in string.digits for char in password)))
 
-    def test_generate_password_with_keywords(self):
-        """
-        Tests if the generated password includes keywords.
-        """
-        keywords = ['hello', 'world']
-        password_generator = PasswordGenerator(
-            keywords=keywords
-        )
-        password = password_generator.generate_password()
-        print(password)
-
-        self.assertTrue((any(keyword in password for keyword in keywords)))
-
-
 
