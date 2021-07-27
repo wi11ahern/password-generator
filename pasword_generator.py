@@ -8,7 +8,7 @@ class PasswordGenerator:
 
     def __init__(
             self,
-            password_length: int = 12,
+            password_length: int = 8,
             keywords: List[str] = None,
             include_special_chars: bool = True,
             include_numbers: bool = True
