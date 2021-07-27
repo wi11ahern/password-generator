@@ -6,35 +6,38 @@ from pasword_generator import PasswordGenerator
 class PasswordGeneratorGui:
 
     def create_gui(self) -> None:
+        body_text_font = ('Aerial', 16)
+        frame_title_font_size = ('Aerial', 20)
+
         password_options_frame_layout = [
-            [sg.Text(text='Password Length', justification='left')],
-            [sg.Slider(key='-PASSWORD_LENGTH-', range=(6, 100), default_value=6, orientation='horizontal')],
-            [sg.Checkbox(key='-DIGITS-', text='Include Digits', default=True)],
-            [sg.Checkbox(key='-SPECIAL_CHARS-', text='Include Special Characters', default=True)],
-            [sg.Text(text='Keywords\n(Separate keywords with a space.', justification='left')],
-            [sg.Input(key='-KEYWORDS-', justification='left', size=(30, 1))],
+            [sg.Text(text='Password Length', justification='left', font=body_text_font)],
+            [sg.Slider(key='-PASSWORD_LENGTH-', range=(6, 100), default_value=6, size=(30, 10), orientation='horizontal', font=body_text_font)],
+            [sg.Checkbox(key='-DIGITS-', text='Include Digits', default=True, font=body_text_font)],
+            [sg.Checkbox(key='-SPECIAL_CHARS-', text='Include Special Characters', default=True, font=body_text_font)],
+            [sg.Text(text='Keywords\n(Separate keywords with a space.)', justification='left', font=body_text_font)],
+            [sg.Input(key='-KEYWORDS-', justification='left', size=(30, 1), font=body_text_font)],
         ]
 
         output_frame_layout = [
-            [sg.Output(key='-OUTPUT-', size=(35, 14))]
+            [sg.Output(key='-OUTPUT-', size=(35, 11), font=body_text_font)]
         ]
 
         button_frame_layout = [
             [
-                sg.Button('Generate', key='-GENERATE-'),
-                sg.Button('Reset', key='-RESET-'),
-                sg.Button('Clear Output', key='-CLEAR-'),
-                sg.Button('Exit', key='-EXIT-'),
+                sg.Button('Generate', key='-GENERATE-', font=body_text_font),
+                sg.Button('Reset', key='-RESET-', font=body_text_font),
+                sg.Button('Clear Output', key='-CLEAR-', font=body_text_font),
+                sg.Button('Exit', key='-EXIT-', font=body_text_font),
             ]
         ]
 
         layout = [
             [
-                sg.Frame('Password Options', password_options_frame_layout, element_justification='l'),
-                sg.Frame('Generated Passwords', output_frame_layout, element_justification='c')
+                sg.Frame('Password Options', password_options_frame_layout, element_justification='l', font=frame_title_font_size),
+                sg.Frame('Generated Passwords', output_frame_layout, element_justification='c', font=frame_title_font_size)
             ],
             [
-                sg.Frame('', button_frame_layout, element_justification='c')
+                sg.Frame('', button_frame_layout, element_justification='c', border_width=0)
             ]
         ]
 
