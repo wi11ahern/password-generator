@@ -5,7 +5,7 @@ from typing import List
 
 class PasswordGenerator:
     _acceptable_characters: str = string.ascii_letters
-    _special_characters: str = string.punctuation + ' '
+    _special_characters: str = '!@*-_.'
 
     def __init__(
             self,
