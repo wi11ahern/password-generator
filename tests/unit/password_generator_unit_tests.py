@@ -20,7 +20,7 @@ class PasswordGeneratorUnitTests(TestCase):
 
         self.assertIsInstance(password, str)
         self.assertTrue(len(password) == 8)
-        self.assertTrue((any(char in '!@#$%&' for char in password)))
+        self.assertTrue((any(char in string.punctuation + ' ' for char in password)))
         self.assertTrue((any(char in string.digits for char in password)))
 
     def test_generate_password_without_special_characters(self):
@@ -32,7 +32,7 @@ class PasswordGeneratorUnitTests(TestCase):
         )
         password = password_generator.generate_password()
 
-        self.assertTrue((not any(char in '!@#$%&' for char in password)))
+        self.assertTrue((not any(char in string.punctuation + ' ' for char in password)))
 
     def test_generate_password_without_numbers(self):
         """

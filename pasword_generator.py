@@ -37,7 +37,7 @@ class PasswordGenerator:
         # If True, include special characters !@#$%& in the acceptable characters
         # Guarantees that at least 1 special character is included in the password.
         if self.include_special_chars:
-            special_characters = '!@#$%&'
+            special_characters = string.punctuation + ' '
             self._acceptable_characters += special_characters
             guaranteed_characters_list.append(random.choice(special_characters))
 
