@@ -19,7 +19,7 @@ class PasswordGeneratorUnitTests(TestCase):
         password = password_generator.generate_password()
 
         self.assertIsInstance(password, str)
-        self.assertTrue(len(password) == 12)
+        self.assertTrue(len(password) == 8)
         self.assertTrue((any(char in '!@#$%&' for char in password)))
         self.assertTrue((any(char in string.digits for char in password)))
 
