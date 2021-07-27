@@ -10,7 +10,6 @@ class PasswordGenerator:
     def __init__(
             self,
             password_length: int = 8,
-            keywords: List[str] = None,
             include_special_chars: bool = True,
             include_numbers: bool = True
     ):
@@ -18,7 +17,6 @@ class PasswordGenerator:
         if password_length < 8:
             raise EnvironmentError(f'Password length must be at least 8 characters. {password_length} were given.')
 
-        self.keywords = keywords
         self.include_special_chars = include_special_chars
         self.include_numbers = include_numbers
 
@@ -57,10 +55,6 @@ class PasswordGenerator:
 
         # Shuffle all characters minus the first.
         random.shuffle(password_characters[1:])
-
-        if self.keywords:
-            for keyword in self.keywords:
-                password_characters.insert(random.choice(range(0, len(password_characters) - 1)), keyword)
 
         return ''.join(password_characters)
 
