@@ -12,7 +12,7 @@ class PasswordGeneratorGui:
         password_options_frame_layout = [
             [sg.Text(text='Password Length', justification='left', font=body_text_font)],
             [sg.Slider(key='-PASSWORD_LENGTH-', range=(6, 100), default_value=6, size=(30, 10), orientation='horizontal', font=body_text_font)],
-            [sg.Checkbox(key='-DIGITS-', text='Include Digits', default=True, font=body_text_font)],
+            [sg.Checkbox(key='-DIGITS-', text='Include Numbers', default=True, font=body_text_font)],
             [sg.Checkbox(key='-SPECIAL_CHARS-', text='Include Special Characters', default=True, font=body_text_font)],
             [sg.Text(text='Keywords\n(Separate keywords with a space.)', justification='left', font=body_text_font)],
             [sg.Input(key='-KEYWORDS-', justification='left', size=(30, 1), font=body_text_font)],
