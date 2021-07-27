@@ -5,6 +5,7 @@ from typing import List
 
 class PasswordGenerator:
     _acceptable_characters: str = string.ascii_letters
+    _special_characters: str = string.punctuation + ' '
 
     def __init__(
             self,
@@ -14,8 +15,8 @@ class PasswordGenerator:
             include_numbers: bool = True
     ):
         self.password_length = password_length
-        if password_length < 6:
-            raise EnvironmentError(f'Password length must be at least 6 characters. {password_length} were given.')
+        if password_length < 8:
+            raise EnvironmentError(f'Password length must be at least 8 characters. {password_length} were given.')
 
         self.keywords = keywords
         self.include_special_chars = include_special_chars
@@ -37,17 +38,25 @@ class PasswordGenerator:
         # If True, include special characters !@#$%& in the acceptable characters
         # Guarantees that at least 1 special character is included in the password.
         if self.include_special_chars:
-            special_characters = string.punctuation + ' '
-            self._acceptable_characters += special_characters
-            guaranteed_characters_list.append(random.choice(special_characters))
+            self._acceptable_characters += self._special_characters
+            guaranteed_characters_list.append(random.choice(self._special_characters))
 
-        # Generate the set of password characters.
+        # Guarantee that the first character of the password is always a letter or number.
         password_characters: List[str] = [
-            random.choice(self._acceptable_characters)
-            for i in range(self.password_length - len(guaranteed_characters_list))
+            random.choice(self._acceptable_characters.strip(self._special_characters))
         ]
+
+        # Generate the remaining number of characters.
+        password_characters.extend([
+            random.choice(self._acceptable_characters)
+            for i in range(self.password_length - len(guaranteed_characters_list) - 1)
+        ])
+
+        # Add in guaranteed characters if any.
         password_characters.extend(guaranteed_characters_list)
-        random.shuffle(password_characters)
+
+        # Shuffle all characters minus the first.
+        random.shuffle(password_characters[1:])
 
         if self.keywords:
             for keyword in self.keywords:
