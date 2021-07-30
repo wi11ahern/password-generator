@@ -18,7 +18,7 @@ class PasswordGeneratorUnitTests(TestCase):
         - Includes at least 1 digit
         """
         password_generator = PasswordGenerator()
-        password = password_generator.generate_password()
+        password = password_generator.generate_shuffled_password()
         print(password)
 
         self.assertIsInstance(password, str)
@@ -34,7 +34,7 @@ class PasswordGeneratorUnitTests(TestCase):
         password_generator = PasswordGenerator(
             include_special_chars=False
         )
-        password = password_generator.generate_password()
+        password = password_generator.generate_shuffled_password()
         print(password)
 
         self.assertTrue((any(char in password[0] for char in string.digits + string.ascii_letters)))
@@ -46,7 +46,7 @@ class PasswordGeneratorUnitTests(TestCase):
         password_generator = PasswordGenerator(
             include_special_chars=False
         )
-        password = password_generator.generate_password()
+        password = password_generator.generate_shuffled_password()
         print(password)
 
         self.assertTrue((not any(char in self._special_characters for char in password)))
@@ -58,9 +58,21 @@ class PasswordGeneratorUnitTests(TestCase):
         password_generator = PasswordGenerator(
             include_numbers=False
         )
-        password = password_generator.generate_password()
+        password = password_generator.generate_shuffled_password()
         print(password)
 
         self.assertTrue((not any(char in string.digits for char in password)))
 
+    def test_generate_human_readable_password(self):
+        """
+        Tests if the generated password is non-shuffled, human-readable password.
+        """
+        password_generator = PasswordGenerator(
+            password_length=8
+        )
+        password = password_generator.generate_human_readable_password()
+        print(password)
+
+        self.assertTrue(len(password.split('-')) == 8)
+        self.assertIsInstance(password, str)
 

@@ -21,7 +21,7 @@ class PasswordGeneratorGui:
                 sg.Slider(
                     key='-PASSWORD_LENGTH-',
                     range=(8, 100),
-                    default_value=6,
+                    default_value=8,
                     size=(30, 10),
                     orientation='horizontal',
                     font=body_text_font
@@ -56,8 +56,8 @@ class PasswordGeneratorGui:
             [
                 sg.Slider(
                     key='-NUM_OF_WORDS-',
-                    range=(8, 100),
-                    default_value=6,
+                    range=(4, 20),
+                    default_value=4,
                     size=(30, 10),
                     orientation='horizontal',
                     font=body_text_font
@@ -162,24 +162,30 @@ class PasswordGeneratorGui:
         while True:
             event, values = window.read()
 
-            if event == '-GENERATE-':
+            if event == '-GENERATE-' and window['-PO_COL_1-'].visible:
                 password_generator = PasswordGenerator(
-                    password_length=int(values[password_length_key]),
+                    password_length=int(values['-PASSWORD_LENGTH-']),
                     include_numbers=values['-DIGITS-'],
                     include_special_chars=values['-SPECIAL_CHARS-'],
                 )
-                password = password_generator.shuffled_password()
+                password = password_generator.generate_shuffled_password()
+                print(password)
+                print('\n')
+
+            elif event == '-GENERATE-' and window['-PO_COL_2-'].visible:
+                password_generator = PasswordGenerator(
+                    password_length=int(values['-NUM_OF_WORDS-']),
+                )
+                password = password_generator.generate_human_readable_password()
                 print(password)
                 print('\n')
 
             if event == '-OPTIONS_LIST-':
                 if values['-OPTIONS_LIST-'] == 'Shuffled Passwords':
-                    password_length_key = '-PASSWORD_LENGTH-'
                     window['-PO_COL_1-'].update(visible=True)
                     window['-PO_COL_2-'].update(visible=False)
 
                 elif values['-OPTIONS_LIST-'] == 'Human-Readable Passwords':
-                    password_length_key = '-NUM_OF_WORDS-'
                     window['-PO_COL_1-'].update(visible=False)
                     window['-PO_COL_2-'].update(visible=True)
 
