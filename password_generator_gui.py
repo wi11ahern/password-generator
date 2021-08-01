@@ -18,16 +18,6 @@ class PasswordGeneratorGui:
                 )
             ],
             [
-                sg.Slider(
-                    key='-PASSWORD_LENGTH-',
-                    range=(8, 100),
-                    default_value=8,
-                    size=(30, 10),
-                    orientation='horizontal',
-                    font=body_text_font
-                )
-            ],
-            [
                 sg.Checkbox(
                     key='-DIGITS-',
                     text='Include Numbers',
@@ -43,6 +33,16 @@ class PasswordGeneratorGui:
                     font=body_text_font
                 )
             ],
+            [
+                sg.Slider(
+                    key='-PASSWORD_LENGTH-',
+                    range=(8, 100),
+                    default_value=8,
+                    size=(39, 10),
+                    orientation='horizontal',
+                    font=body_text_font
+                )
+            ]
         ]
 
         password_options_column_two_layout = [
@@ -58,7 +58,7 @@ class PasswordGeneratorGui:
                     key='-NUM_OF_WORDS-',
                     range=(4, 20),
                     default_value=4,
-                    size=(30, 10),
+                    size=(39, 10),
                     orientation='horizontal',
                     font=body_text_font
                 )
@@ -72,30 +72,43 @@ class PasswordGeneratorGui:
                     values=['Shuffled Passwords', 'Human-Readable Passwords'],
                     default_value='Shuffled Passwords',
                     enable_events=True,
-                    font=body_text_font,
+                    pad=(0, 10),
+                    font=body_text_font
                 )
             ],
             [
                 sg.Column(
                     key='-PO_COL_1-',
-                    layout=password_options_column_one_layout
+                    layout=password_options_column_one_layout,
+                    size=(400, 150)
                 ),
                 sg.Column(
                     key='-PO_COL_2-',
                     layout=password_options_column_two_layout,
+                    size=(400, 75),
                     visible=False
                 )
             ],
         ]
 
-        output_frame_layout = [
+        output_column_layout = [
             [
-
                 sg.Output(
                     key='-OUTPUT-',
-                    size=(40, 1),
                     font=body_text_font,
-                    echo_stdout_stderr=False
+                    echo_stdout_stderr=False,
+                    pad=(4, 4),
+                    size=(36, 1)
+                )
+            ]
+        ]
+        output_frame_layout = [
+            [
+                sg.Column(
+                    key='-OUT_COL_1-',
+                    layout=output_column_layout,
+                    size=(400, 50),
+                    visible=True
                 )
             ]
         ]
@@ -108,7 +121,7 @@ class PasswordGeneratorGui:
                     font=body_text_font
                 ),
                 sg.Button(
-                    button_text='Reset',
+                    button_text='Reset Options',
                     key='-RESET-',
                     font=body_text_font
                 ),
@@ -162,7 +175,6 @@ class PasswordGeneratorGui:
             element_justification='c',
         ).finalize()
 
-        password_length_key = '-PASSWORD_LENGTH-'
         while True:
             event, values = window.read()
 
