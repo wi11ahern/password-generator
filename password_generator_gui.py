@@ -90,10 +90,12 @@ class PasswordGeneratorGui:
 
         output_frame_layout = [
             [
+
                 sg.Output(
                     key='-OUTPUT-',
-                    size=(35, 11),
-                    font=body_text_font
+                    size=(40, 1),
+                    font=body_text_font,
+                    echo_stdout_stderr=False
                 )
             ]
         ]
@@ -130,7 +132,9 @@ class PasswordGeneratorGui:
                     layout=password_options_layout,
                     element_justification='c',
                     font=frame_title_font_size
-                ),
+                )
+            ],
+            [
                 sg.Frame(
                     'Generated Passwords',
                     layout=output_frame_layout,
@@ -169,16 +173,14 @@ class PasswordGeneratorGui:
                     include_special_chars=values['-SPECIAL_CHARS-'],
                 )
                 password = password_generator.generate_shuffled_password()
-                print(password)
-                print('\n')
+                window['-OUTPUT-'].update(password)
 
             elif event == '-GENERATE-' and window['-PO_COL_2-'].visible:
                 password_generator = PasswordGenerator(
                     password_length=int(values['-NUM_OF_WORDS-']),
                 )
                 password = password_generator.generate_human_readable_password()
-                print(password)
-                print('\n')
+                window['-OUTPUT-'].update(password)
 
             if event == '-OPTIONS_LIST-':
                 if values['-OPTIONS_LIST-'] == 'Shuffled Passwords':
