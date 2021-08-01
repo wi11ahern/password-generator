@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 
 class PasswordGeneratorInterface(metaclass=ABCMeta):
     @classmethod
-    def __subclasscheck__(self, subclass):
+    def __subclasscheck__(cls, subclass):
         return (
                 hasattr(subclass, 'generate_password') and
                 callable(subclass.generate_password)
