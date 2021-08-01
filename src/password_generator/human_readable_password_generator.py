@@ -9,13 +9,20 @@ class HumanReadablePasswordGenerator(PasswordGeneratorInterface):
     def __init__(
             self,
             number_of_words: int = 4,
-            word_delimiter: str = '-',
+            word_delimiter: str = 'Dash',
             include_uppercase_words: bool = False,
             include_special_chars: bool = False,
             include_numbers: bool = False
     ):
+        delimiter_map = {
+            'Dash': '-',
+            'Underscore': '_',
+            'Space': ' ',
+            'Comma': ',',
+            'Period': '.'
+        }
         self.number_of_words = number_of_words
-        self.word_delimiter = word_delimiter
+        self.word_delimiter = delimiter_map[word_delimiter]
         self.include_uppercase_words = include_uppercase_words
         self.include_special_chars = include_special_chars
         self.include_numbers = include_numbers

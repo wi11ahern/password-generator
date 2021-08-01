@@ -48,6 +48,46 @@ class PasswordGeneratorGui:
 
         password_options_column_two_layout = [
             [
+                sg.Checkbox(
+                    key='-HR_UPPERCASE-',
+                    text='Include Uppercase Words',
+                    default=False,
+                    font=body_text_font
+                )
+            ],
+            [
+                sg.Checkbox(
+                    key='-HR_SPECIAL_CHARS-',
+                    text='Include Special Characters',
+                    default=False,
+                    font=body_text_font
+                )
+            ],
+            [
+                sg.Checkbox(
+                    key='-HR_NUMBERS-',
+                    text='Include Numbers',
+                    default=False,
+                    font=body_text_font
+                )
+            ],
+            [
+                sg.Text(
+                    text='Delimiter Type',
+                    justification='left',
+                    font=body_text_font
+                )
+            ],
+            [
+                sg.DropDown(
+                    key='-HR_DELIMITER_TYPE-',
+                    values=['Dash', 'Underscore', 'Space', 'Comma', 'Period'],
+                    default_value='Dash',
+                    enable_events=True,
+                    font=body_text_font
+                )
+            ],
+            [
                 sg.Text(
                     text='Number of Words',
                     justification='left',
@@ -56,7 +96,7 @@ class PasswordGeneratorGui:
             ],
             [
                 sg.Slider(
-                    key='-NUM_OF_WORDS-',
+                    key='-HR_NUM_OF_WORDS-',
                     range=(4, 20),
                     default_value=4,
                     size=(39, 10),
@@ -86,7 +126,7 @@ class PasswordGeneratorGui:
                 sg.Column(
                     key='-PO_COL_2-',
                     layout=password_options_column_two_layout,
-                    size=(400, 75),
+                    size=(400, 230),
                     visible=False
                 )
             ],
@@ -190,7 +230,11 @@ class PasswordGeneratorGui:
 
             elif event == '-GENERATE-' and window['-PO_COL_2-'].visible:
                 human_readable_password_generator = HumanReadablePasswordGenerator(
-                    number_of_words=int(values['-NUM_OF_WORDS-']),
+                    number_of_words=int(values['-HR_NUM_OF_WORDS-']),
+                    word_delimiter=values['-HR_DELIMITER_TYPE-'],
+                    include_uppercase_words=values['-HR_UPPERCASE-'],
+                    include_special_chars=values['-HR_SPECIAL_CHARS-'],
+                    include_numbers=values['-HR_NUMBERS-']
                 )
                 password = human_readable_password_generator.generate_password()
                 window['-OUTPUT-'].update(password)
@@ -214,8 +258,20 @@ class PasswordGeneratorGui:
                 if '-PASSWORD_LENGTH-' in values.keys():
                     window.FindElement('-PASSWORD_LENGTH-').Update(0)
 
-                if '-NUM_OF_WORDS-' in values.keys():
-                    window.FindElement('-NUM_OF_WORDS-').Update(0)
+                if '-HR_UPPERCASE-' in values.keys():
+                    window.FindElement('-HR_UPPERCASE-').Update(False)
+
+                if '-HR_SPECIAL_CHARS-' in values.keys():
+                    window.FindElement('-HR_SPECIAL_CHARS-').Update(False)
+
+                if '-HR_NUMBERS-' in values.keys():
+                    window.FindElement('-HR_NUMBERS-').Update(0)
+
+                if '-HR_DELIMITER_TYPE-' in values.keys():
+                    window.FindElement('-HR_DELIMITER_TYPE-').Update('Dash')
+
+                if '-HR_NUM_OF_WORDS-' in values.keys():
+                    window.FindElement('-HR_NUM_OF_WORDS-').Update(0)
 
             if event == '-CLEAR-':
                 window.FindElement('-OUTPUT-').Update('')
