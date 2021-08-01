@@ -227,6 +227,7 @@ class PasswordGeneratorGui:
                 )
                 password = password_generator.generate_password()
                 window['-OUTPUT-'].update(password)
+                window.refresh()
 
             elif event == '-GENERATE-' and window['-PO_COL_2-'].visible:
                 human_readable_password_generator = HumanReadablePasswordGenerator(
@@ -238,6 +239,7 @@ class PasswordGeneratorGui:
                 )
                 password = human_readable_password_generator.generate_password()
                 window['-OUTPUT-'].update(password)
+                window.refresh()
 
             if event == '-OPTIONS_LIST-':
                 if values['-OPTIONS_LIST-'] == 'Shuffled Passwords':
