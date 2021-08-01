@@ -1,4 +1,4 @@
-from password_generator_gui import PasswordGeneratorGui
+from src.password_generator.password_generator_gui import PasswordGeneratorGui
 
 
 def main():

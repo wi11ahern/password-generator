@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 
-from pasword_generator import PasswordGenerator
+from src.password_generator.shuffled_password_generator import ShuffledPasswordGenerator
+from src.password_generator.human_readable_password_generator import HumanReadablePasswordGenerator
 
 
 class PasswordGeneratorGui:
@@ -141,7 +142,7 @@ class PasswordGeneratorGui:
         layout = [
             [
                 sg.Frame(
-                    'Password Options',
+                    title='Password Options',
                     layout=password_options_layout,
                     element_justification='c',
                     font=frame_title_font_size
@@ -149,7 +150,7 @@ class PasswordGeneratorGui:
             ],
             [
                 sg.Frame(
-                    'Generated Passwords',
+                    title='Generated Password',
                     layout=output_frame_layout,
                     element_justification='c',
                     font=frame_title_font_size
@@ -179,19 +180,19 @@ class PasswordGeneratorGui:
             event, values = window.read()
 
             if event == '-GENERATE-' and window['-PO_COL_1-'].visible:
-                password_generator = PasswordGenerator(
+                password_generator = ShuffledPasswordGenerator(
                     password_length=int(values['-PASSWORD_LENGTH-']),
                     include_numbers=values['-DIGITS-'],
                     include_special_chars=values['-SPECIAL_CHARS-'],
                 )
-                password = password_generator.generate_shuffled_password()
+                password = password_generator.generate_password()
                 window['-OUTPUT-'].update(password)
 
             elif event == '-GENERATE-' and window['-PO_COL_2-'].visible:
-                password_generator = PasswordGenerator(
-                    password_length=int(values['-NUM_OF_WORDS-']),
+                human_readable_password_generator = HumanReadablePasswordGenerator(
+                    number_of_words=int(values['-NUM_OF_WORDS-']),
                 )
-                password = password_generator.generate_human_readable_password()
+                password = human_readable_password_generator.generate_password()
                 window['-OUTPUT-'].update(password)
 
             if event == '-OPTIONS_LIST-':

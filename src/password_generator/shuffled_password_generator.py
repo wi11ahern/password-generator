@@ -1,12 +1,11 @@
 import random
 import string
 
-import settings
-
 from typing import List
+from src.password_generator.i_password_generator import PasswordGeneratorInterface
 
 
-class PasswordGenerator:
+class ShuffledPasswordGenerator(PasswordGeneratorInterface):
     _acceptable_characters: str = string.ascii_letters
     _special_characters: str = '!@*-_.'
 
@@ -20,7 +19,7 @@ class PasswordGenerator:
         self.include_special_chars = include_special_chars
         self.include_numbers = include_numbers
 
-    def generate_shuffled_password(self) -> str:
+    def generate_password(self) -> str:
         """
         Generates a randomized password.
         :return: password string.
@@ -57,30 +56,4 @@ class PasswordGenerator:
         random.shuffle(password_characters[1:])
 
         return ''.join(password_characters)
-
-    def generate_human_readable_password(self) -> str:
-        """
-        Generates a random, human-readable password.
-        :return: password string.
-        """
-        # Read in words from file.
-        with open(settings.ROOT_DIR + '/resources/proper_names_list.txt') as file:
-            words: str = file.read()
-
-        words: List[str] = words.splitlines()
-        curated_words: List[str] = []
-
-        # Curate sub-selection of words.
-        for word in words:
-            word_length = len(word)
-            if 4 <= word_length <= 6:
-                curated_words.append(random.choice([word.upper(), word.lower()]))
-
-        # Randomly select words to form the password.
-        password_words: List[str] = [
-            random.choice(curated_words)
-            for i in range(self.password_length)
-        ]
-
-        return '-'.join(password_words)
 
